@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facebook - Sign Up</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+      }
+
+      .container {
+        text-align: center;
+      }
+
+      .logo {
+        height: 100px;
+        margin-bottom: 15px;
+      }
+
+      .main {
+        background: #fff;
+        width: 440px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+      }
+
+      .intro {
+        padding: 16px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .intro .title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .intro .description {
+        text-align: center;
+        font-size: 14px;
+        color: #606770;
+      }
+
+      .signup-box {
+        padding: 16px;
+        text-align: left;
+      }
+
+      .signup-box p {
+        color: #777;
+        font-size: 12px;
+        margin: 10px 0;
+        line-height: 1.4;
+      }
+
+      .input-group {
+        display: flex;
+        gap: 10px;
+      }
+
+      .input-group input,
+      .input-group select {
+        flex: 1;
+        padding: 10px 4px;
+        border: 1px solid #ccd0d5;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: border 0.2s;
+      }
+
+      .input-group input:focus,
+      .input-group select:focus,
+      .signup-box input:focus {
+        border: 1px solid #1877f2;
+        outline: none;
+      }
+
+      .signup-box input[type="text"],
+      .signup-box input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccd0d5;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+
+      label {
+        font-size: 11px;
+        color: #606770;
+        margin-bottom: 6px;
+        display: block;
+      }
+
+      .gender {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 4px;
+      }
+
+      .radio-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+      }
+
+      .gender label {
+        border: 1px solid #ccd0d5;
+        border-radius: 6px;
+        flex: 1;
+        text-align: center;
+        padding: 8px 0;
+        margin-right: 10px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .gender label:last-child {
+        margin-right: 0;
+      }
+
+      .gender input {
+        margin-right: 4px;
+      }
+
+      .terms {
+        font-size: 11px;
+        color: #606770;
+        margin-bottom: 12px;
+      }
+
+      .terms a {
+        color: #385898;
+        text-decoration: none;
+      }
+
+      .terms a:hover {
+        text-decoration: underline;
+      }
+
+      .register-btn {
+        background: #00a400;
+        color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+        width: 200px;
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        display: block;
+        margin: 15px auto;
+        text-align: center;
+      }
+
+      .register-btn:hover {
+        background: #039003;
+      }
+
+      .login-link {
+        display: block;
+        text-align: center;
+        font-size: 15px;
+        color: #1877f2;
+        text-decoration: none;
+        padding: 10px 0;
+      }
+
+      .login-link:hover {
+        text-decoration: underline;
+      }
+
+      .mt-3 {
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img
+        class="logo"
+        src="https://static.xx.fbcdn.net/rsrc.php/y1/r/4lCu2zih0ca.svg"
+        alt=""
+      />
+      <div class="main">
+        <div class="intro">
+          <h2 class="title">Create a new account</h2>
+          <p class="description">Quick and easy.</p>
+        </div>
+        <div class="signup-box">
+          <form>
+            <div class="input-group">
+              <input type="text" placeholder="Surname" required />
+              <input type="text" placeholder="Name" required />
+            </div>
+            <label>Date of birth</label>
+            <div class="input-group">
+              <select name="day">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+              </select>
+
+              <select name="month">
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+              </select>
+
+              <select>
+                <option>2004</option>
+                <option>2003</option>
+                <option>2002</option>
+                <option>2001</option>
+                <option>2000</option>
+                <option>1999</option>
+              </select>
+            </div>
+
+            <label class="mt-3">Sex</label>
+            <div class="gender">
+              <label class="radio-label"
+                ><span>Female</span><input type="radio" name="gender" />
+              </label>
+              <label class="radio-label"
+                ><span>Male</span><input type="radio" name="gender" />
+              </label>
+              <label class="radio-label"
+                ><span>Customize</span><input type="radio" name="gender" />
+              </label>
+            </div>
+
+            <input type="text" placeholder="Mobile number or email" required />
+            <input type="password" placeholder="New password" required />
+
+            <p class="terms">
+              People who use our services may have uploaded your contact
+              information to Facebook.
+              <a href="https://www.facebook.com/help/637205020878504"
+                >Learn more</a
+              >.
+            </p>
+            <p class="terms">
+              By clicking Sign Up, you agree to our <a href="#">Terms</a>,
+              <a href="https://www.facebook.com/legal/terms/update"
+                >Privacy Policy</a
+              >
+              and
+              <a
+                href="https://www.facebook.com/privacy/policies/cookies/?entry_point=cookie_policy_redirect&entry=0"
+                >Cookie Policy</a
+              >. You can receive our notifications via SMS and opt out at any
+              time.
+            </p>
+
+            <button type="submit" class="register-btn">Register</button>
+          </form>
+          <a href="#" class="login-link">Already have an account?</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

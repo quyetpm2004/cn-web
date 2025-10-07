@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thông tin cá nhân - CTSV</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box !important;
+        font-family: Arial, sans-serif !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      body {
+        background-color: #f5f7fb !important;
+      }
+
+      .container {
+        display: flex !important;
+        max-width: 1200px !important;
+        margin: 30px auto !important;
+        background-color: white !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        overflow: hidden !important;
+      }
+
+      /* Left panel */
+      .left-panel {
+        width: 30% !important;
+        background-color: #fafbff !important;
+        border-right: 1px solid #e1e5eb !important;
+        padding: 20px !important;
+      }
+
+      .profile-card {
+        background-color: #fff !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 8px !important;
+        text-align: center !important;
+        padding: 20px !important;
+      }
+
+      .avatar {
+        width: 120px !important;
+        height: 120px !important;
+        border-radius: 50% !important;
+        border: 3px solid #007bff !important;
+        object-fit: cover !important;
+      }
+
+      .profile-info {
+        margin-top: 15px !important;
+        text-align: left !important;
+        font-size: 14px !important;
+      }
+
+      .profile-info p {
+        margin-bottom: 8px !important;
+      }
+
+      .status-card {
+        background-color: #fff !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 8px !important;
+        margin-top: 20px !important;
+      }
+
+      .tab-header {
+        display: flex !important;
+        border-bottom: 1px solid #e0e0e0 !important;
+      }
+
+      .tab-btn {
+        flex: 1 !important;
+        padding: 10px !important;
+        background: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        font-weight: bold !important;
+        border: 1px solid #f0f0f0 !important;
+        font-size: 14px !important;
+      }
+
+      .tab-btn.active {
+        color: #5aa9fe !important;
+      }
+
+      .status-content {
+        padding: 15px !important;
+        font-size: 14px !important;
+      }
+
+      .status-content p {
+        margin-bottom: 8px !important;
+      }
+
+      /* Right panel */
+      .right-panel {
+        flex: 1 !important;
+        padding: 20px 30px !important;
+      }
+
+      .tabs {
+        display: flex !important;
+        border-bottom: 1px solid #e1e5eb !important;
+        margin-bottom: 20px !important;
+      }
+      .chart-card {
+        padding: 20px !important;
+        border-radius: 12px !important;
+        background: #fff !important;
+        box-shadow: 0 6px 18px rgba(20, 20, 50, 0.04) !important;
+      }
+
+      .tab {
+        background: none !important;
+        border: none !important;
+        cursor: pointer !important;
+        padding: 10px 15px !important;
+        font-weight: bold !important;
+        color: #555 !important;
+        border: 1px solid #f0f0f0 !important;
+        font-size: 14px !important;
+      }
+
+      .tab.active {
+        color: #5aa9fe !important;
+        border-bottom: none !important;
+      }
+
+      .info-section h3 {
+        margin-bottom: 10px !important;
+        font-size: 16px !important;
+        font-weight: bold !important;
+      }
+
+      .info-section h3 span {
+        border-bottom: 1px solid #ccc !important;
+      }
+
+      .info-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 8px 20px !important;
+        margin-bottom: 10px !important;
+        font-size: 14px !important;
+      }
+
+      .info-grid-2 {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px 20px !important;
+        margin-bottom: 10px !important;
+        font-size: 14px !important;
+      }
+
+      .parent {
+        font-size: 14px !important;
+        margin-bottom: 8px !important;
+      }
+
+      .info-grid-child p {
+        margin-bottom: 8px !important;
+      }
+
+      .chart-section {
+        display: flex !important;
+        justify-content: space-between !important;
+        margin-top: 20px !important;
+      }
+
+      .chart {
+        width: 48% !important;
+        background: #fff !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 8px !important;
+        text-align: center !important;
+        padding: 10px !important;
+      }
+
+      .chart img {
+        width: 100% !important;
+        margin-top: 10px !important;
+      }
+
+      .p-10 {
+        padding: 0 10px !important;
+      }
+
+      .container-chart {
+        max-width: 1200px !important;
+        margin: 30px auto !important;
+        background-color: white !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        overflow: hidden !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Cột bên trái -->
+      <div class="left-panel">
+        <div class="profile-card">
+          <img
+            src="https://sm.ign.com/ign_pk/cover/a/avatar-gen/avatar-generations_rpge.jpg"
+            alt="avatar"
+            class="avatar"
+          />
+          <div class="profile-info">
+            <p>MS: 20225663</p>
+            <p>Họ tên: Phạm Mạnh Quyết</p>
+            <p>Lớp: Công nghệ thông tin Việt Nhật 06-K67</p>
+            <p>Email: quyet.pm225663@sis.hust.edu.vn</p>
+            <p>Email cá nhân: nguyenvana@gmail.com</p>
+          </div>
+        </div>
+
+        <div class="status-card">
+          <div class="tab-header">
+            <button class="tab-btn active">Trạng thái</button>
+            <button class="tab-btn">Quản lý</button>
+          </div>
+          <div class="status-content">
+            <p>Trạng thái học tập: Học</p>
+            <p>CPA: 3.25</p>
+            <p>Nợ: 0 TC</p>
+            <p>Tích lũy: 64 TC</p>
+            <p>Mức cảnh cáo: M0</p>
+            <p>Trình độ: 3</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cột bên phải -->
+      <div class="right-panel">
+        <div class="tabs">
+          <button class="tab active">Lý lịch</button>
+          <button class="tab" onclick="showTab('decision')">Quyết định</button>
+          <button class="tab">Khen thưởng</button>
+          <button class="tab">Liên hệ</button>
+          <button class="tab">Nhận xét</button>
+          <button class="tab">Hoạt động tham gia</button>
+        </div>
+
+        <div class="info-section">
+          <h3><span>Thông tin cá nhân</span></h3>
+          <div class="p-10">
+            <div class="info-grid">
+              <p>Ngày sinh: 10/05/2002</p>
+              <p>Nơi sinh: Thanh Hóa</p>
+              <p>Giới tính: Nam</p>
+              <p>Số CMTND: 3912312312</p>
+              <p>Nơi cấp: Thái Bình</p>
+              <p>Ngày cấp:</p>
+              <p>Dân tộc: Kinh</p>
+              <p>Tôn giáo: Không</p>
+              <p>Chi đoàn:</p>
+              <p>Ngày vào đoàn:</p>
+              <p>Ngày vào Đảng:</p>
+              <p>Đoàn viên:</p>
+              <div class="info-grid-child">
+                <p>Đối tượng chính sách:</p>
+                <p>Số thẻ bảo hiểm:</p>
+                <p>Địa chỉ thường trú:</p>
+                <p>Nơi ở hiện tại:</p>
+              </div>
+            </div>
+          </div>
+          <h3><span>Thông tin gia đình</span></h3>
+          <div class="p-10">
+            <div class="parent">
+              <p><strong>Họ và tên cha:</strong> Nguyễn Văn B</p>
+            </div>
+            <div class="info-grid">
+              <p>Dân tộc: Kinh</p>
+              <p>Năm sinh: 1980</p>
+              <p>Quốc tịch: Việt Nam</p>
+              <p>Nơi làm việc:</p>
+              <p>Tôn giáo:</p>
+              <p>Nghề nghiệp: Công nhân</p>
+              <div class="info-grid-child">
+                <p>Địa chỉ thường trú:</p>
+                <p>Liên hệ:</p>
+              </div>
+            </div>
+
+            <div class="parent">
+              <p><strong>Họ và tên mẹ:</strong> Nguyễn Thị B</p>
+            </div>
+            <div class="info-grid">
+              <p>Dân tộc: Kinh</p>
+              <p>Năm sinh: 1980</p>
+              <p>Quốc tịch: Việt Nam</p>
+              <p>Nơi làm việc:</p>
+              <p>Tôn giáo:</p>
+              <p>Nghề nghiệp: Công nhân</p>
+              <div class="info-grid-child">
+                <p>Địa chỉ thường trú:</p>
+                <p>Liên hệ:</p>
+              </div>
+            </div>
+            <div class="parent">
+              <p><strong>Thông tin người thân khác:</strong></p>
+            </div>
+            <div class="info-grid-2">
+              <p><strong>Thuộc hộ:</strong></p>
+              <p><strong>Số sổ:</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Charts row -->
+    <div class="container-chart">
+      <div class="row mt-4 g-3">
+        <div class="col-md-6">
+          <div class="chart-card">
+            <h6 style="font-weight: bold">Biểu đồ học tập</h6>
+            <canvas id="studyChart" height="180"></canvas>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="chart-card">
+            <h6 style="font-weight: bold">Biểu đồ rèn luyện</h6>
+            <canvas id="conductChart" height="180"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      const ctx1 = document.getElementById("studyChart");
+      const studyChart = new Chart(ctx1, {
+        type: "bar",
+        data: {
+          labels: ["2020-1", "2020-2", "2021-1", "2021-2", "2022-1"],
+          datasets: [
+            {
+              label: "TC tích luỹ",
+              data: [8, 12, 18, 24, 40],
+              yAxisID: "y",
+              tension: 0.4,
+            },
+            {
+              label: "GPA (giả)",
+              type: "line",
+              data: [2.8, 3.0, 3.2, 3.1, 3.4],
+              yAxisID: "y1",
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          interaction: { mode: "index", intersect: false },
+          scales: {
+            y: {
+              beginAtZero: true,
+              position: "left",
+              title: { display: true, text: "TC" },
+            },
+            y1: {
+              beginAtZero: true,
+              position: "right",
+              grid: { drawOnChartArea: false },
+              title: { display: true, text: "GPA" },
+            },
+          },
+        },
+      });
+
+      const ctx2 = document.getElementById("conductChart");
+      const conductChart = new Chart(ctx2, {
+        type: "line",
+        data: {
+          labels: ["2020-1", "2020-2", "2021-1", "2021-2"],
+          datasets: [
+            {
+              label: "Điểm rèn luyện (giả)",
+              data: [75, 82, 90, 78],
+              tension: 0.3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          scales: { y: { beginAtZero: true, max: 100 } },
+        },
+      });
+    </script>
+  </body>
+</html>
