@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý sản phẩm</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        max-width: 700px;
+        margin: 30px auto;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        padding: 8px;
+      }
+      th {
+        background: #eee;
+      }
+      input {
+        margin: 5px;
+        padding: 5px;
+      }
+      button {
+        padding: 5px 10px;
+        margin: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Quản lý Sản phẩm</h1>
+
+    <form id="productForm">
+      <input type="hidden" id="productId" />
+      <input type="text" id="name" placeholder="Tên sản phẩm" required />
+      <input type="number" id="quantity" placeholder="Số lượng" required />
+      <input type="number" id="price" placeholder="Giá (VNĐ)" required />
+      <button type="submit">Thêm / Cập nhật</button>
+    </form>
+
+    <h2>Danh sách sản phẩm</h2>
+    <table id="productTable">
+      <thead>
+        <tr>
+          <th>Tên</th>
+          <th>Số lượng</th>
+          <th>Giá</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <script>
+      const API_URL = "http://localhost:3000/api/products";
+      const form = document.getElementById("productForm");
+      const tableBody = document.querySelector("#productTable tbody");
+
+      // 🟢 Lấy danh sách sản phẩm
+      async function fetchProducts() {
+        const res = await fetch(API_URL);
+        const products = await res.json();
+        tableBody.innerHTML = "";
+        products.forEach((p) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+          <td>${p.name}</td>
+          <td>${p.quantity}</td>
+          <td>${p.price}</td>
+          <td>
+            <button onclick="editProduct('${p._id}')">Sửa</button>
+            <button onclick="deleteProduct('${p._id}')">Xóa</button>
+          </td>
+        `;
+          tableBody.appendChild(row);
+        });
+      }
+
+      // 🟡 Thêm hoặc cập nhật sản phẩm
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const id = document.getElementById("productId").value;
+        const product = {
+          name: document.getElementById("name").value,
+          quantity: document.getElementById("quantity").value,
+          price: document.getElementById("price").value,
+        };
+
+        const method = id ? "PUT" : "POST";
+        const url = id ? `${API_URL}/${id}` : API_URL;
+
+        await fetch(url, {
+          method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(product),
+        });
+
+        form.reset();
+        fetchProducts();
+      });
+
+      // 🟠 Sửa sản phẩm
+      async function editProduct(id) {
+        const res = await fetch(`${API_URL}/${id}`);
+        const product = await res.json();
+        document.getElementById("productId").value = product._id;
+        document.getElementById("name").value = product.name;
+        document.getElementById("quantity").value = product.quantity;
+        document.getElementById("price").value = product.price;
+      }
+
+      // 🔴 Xóa sản phẩm
+      async function deleteProduct(id) {
+        if (confirm("Bạn có chắc muốn xóa sản phẩm này?")) {
+          await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+          fetchProducts();
+        }
+      }
+
+      fetchProducts();
+    </script>
+  </body>
+</html>
