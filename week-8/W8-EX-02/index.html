@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>W8-EX-02 - Tìm kiếm (Ajax + PHP)</title>
+    <style>
+      body {
+        font-family: Arial;
+        margin: 40px;
+      }
+      input {
+        width: 300px;
+        padding: 5px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        margin: 5px 0;
+        padding: 5px;
+        background: #ecf0f1;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Tìm kiếm sinh viên</h2>
+    <input type="text" id="search" placeholder="Nhập tên sinh viên..." />
+    <ul id="result"></ul>
+
+    <script>
+      document.getElementById("search").addEventListener("keyup", function () {
+        const keyword = this.value.trim();
+        if (keyword.length === 0) {
+          document.getElementById("result").innerHTML = "";
+          return;
+        }
+
+        fetch("search.php?q=" + encodeURIComponent(keyword))
+          .then((res) => res.json())
+          .then((data) => {
+            const list = document.getElementById("result");
+            list.innerHTML = "";
+            if (data.length === 0) {
+              list.innerHTML = "<li>Không tìm thấy kết quả.</li>";
+            } else {
+              data.forEach((name) => {
+                const li = document.createElement("li");
+                li.textContent = name;
+                list.appendChild(li);
+              });
+            }
+          })
+          .catch((err) => console.error(err));
+      });
+    </script>
+  </body>
+</html>

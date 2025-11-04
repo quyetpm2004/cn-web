@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>W8-EX-03 - Chat (Ajax + PHP + JSON)</title>
+    <style>
+      body {
+        font-family: Arial;
+        margin: 40px;
+      }
+      #chat-box {
+        border: 1px solid #ccc;
+        height: 300px;
+        overflow-y: scroll;
+        padding: 10px;
+      }
+      #message {
+        width: 80%;
+        padding: 5px;
+      }
+      button {
+        padding: 6px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>💬 Ứng dụng Chat đơn giản</h2>
+    <div id="chat-box"></div>
+    <br />
+    <input type="text" id="username" placeholder="Tên của bạn" />
+    <input type="text" id="message" placeholder="Nhập tin nhắn..." />
+    <button onclick="sendMessage()">Gửi</button>
+
+    <script>
+      function loadMessages() {
+        fetch("messages.json")
+          .then((res) => res.json())
+          .then((data) => {
+            const box = document.getElementById("chat-box");
+            box.innerHTML = data
+              .map(
+                (msg) => `<p><b>${msg.user}:</b> ${msg.text} ${msg.time}</p>`
+              )
+              .join("");
+            box.scrollTop = box.scrollHeight;
+          });
+      }
+
+      function sendMessage() {
+        const user = document.getElementById("username").value.trim();
+        const text = document.getElementById("message").value.trim();
+        if (!user || !text) return alert("Nhập tên và tin nhắn!");
+
+        fetch("send.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `user=${encodeURIComponent(user)}&text=${encodeURIComponent(
+            text
+          )}`,
+        }).then(() => {
+          document.getElementById("message").value = "";
+          loadMessages();
+        });
+      }
+
+      setInterval(loadMessages, 1000);
+      loadMessages();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>W8-EX-01 - Giờ Server (Ajax + JSON)</title>
+    <style>
+      body {
+        font-family: Arial;
+        text-align: center;
+        margin-top: 100px;
+      }
+      #time {
+        font-size: 2em;
+        color: #2c3e50;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Giờ hiện tại trên server:</h2>
+    <div id="time">Đang tải...</div>
+
+    <script>
+      function updateTime() {
+        fetch("server_time.php")
+          .then((res) => res.json())
+          .then((data) => {
+            document.getElementById("time").textContent = data.time;
+          })
+          .catch((err) => console.error(err));
+      }
+
+      updateTime();
+      setInterval(updateTime, 1000);
+    </script>
+  </body>
+</html>

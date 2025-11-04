@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chat 1-1 Real-time</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+      }
+      #users {
+        width: 150px;
+        border-right: 1px solid #ccc;
+      }
+      #chat {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      #chatBox {
+        flex: 1;
+        border: 1px solid #aaa;
+        padding: 10px;
+        overflow-y: auto;
+        margin-bottom: 10px;
+      }
+      .message.self {
+        text-align: right;
+        color: blue;
+      }
+      .message.other {
+        text-align: left;
+        color: green;
+      }
+      button {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="users">
+      <h3>👤 Online</h3>
+      <ul id="userList"></ul>
+    </div>
+
+    <div id="chat">
+      <h3 id="chatTitle">Chọn người để chat</h3>
+      <div id="chatBox"></div>
+      <div>
+        <input
+          id="msgInput"
+          type="text"
+          placeholder="Nhập tin nhắn..."
+          style="width: 80%"
+        />
+        <button id="sendBtn">Gửi</button>
+      </div>
+    </div>
+
+    <script src="client.js"></script>
+  </body>
+</html>
